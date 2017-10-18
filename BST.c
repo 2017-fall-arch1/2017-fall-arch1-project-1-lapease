@@ -1,6 +1,7 @@
 #include <stdio.h>		/* for puts,  */
 #include <stdlib.h> 		/* for malloc */
-#include <string.h>		/* for assert */
+#include <string.h>		/* for string */
+#include <assert.h>             /* for assert */
 #include "BST.h"		
 
 int llDoCheck = 1;		/* set true for paranoid consistency checking */
@@ -11,42 +12,49 @@ int llDoCheck = 1;		/* set true for paranoid consistency checking */
 BST *createTree()
 {
   BST *tree = (BST *)malloc(sizeof(BST));//memory for new tree
-  lp->first = lp->last = 0;
-  doCheck(lp);
-  return lp;
+  tree->first = tree->last = 0;
+  doCheck(tree);
+  return tree;
+}
+
+/*add new node*/
+void addName(BST *Tree, char *fName, char *lName)
+{
+  Node new = Node(*fName, *lName);
+	     
 }
 
 /* recycle a list, discarding all items it contains */
-void llFree(LList *lp)
+void freeMemory(BST *tree)
 {
-  doCheck(lp);
-  llMakeEmpty(lp);
-  free(lp);
+  doCheck(tree);
+  llMakeEmpty(tree);
+  free(tree);
 }
 
 /* Delete all elements off of the list */
-void llMakeEmpty(LList *lp)
+void emptyTree(BST *tree)
 {
-  LLItem *current = lp->first, *next;
-  doCheck(lp);
+  Node *current = tree->first, *next;
+  doCheck(tree);
   while (current) {
     next = current->next;
     free(current->str);
     free(current);
     current = next;
   }
-  lp->first = lp->last = 0;	/* list is empty */
-  doCheck(lp);
+  tree->first = tree->last = 0;	/* list is empty */
+  doCheck(tree);
 }
   
 /* append a copy of str to end of list */
-void llPut(LList *lp, char *s)
+void placeStringAtEnd(BST *tree, char *s)
 {
   int len;
   char *scopy;
-  LLItem *i;
+  BST *i;
 
-  doCheck(lp);
+  doCheck(tree);
   /* w = freshly allocated copy of putWord */
   for (len = 0; s[len]; len++) /* compute length */
     ;
@@ -57,45 +65,45 @@ void llPut(LList *lp, char *s)
 
 
   /* i = new item containing s */
-  i = (LLItem *)malloc(sizeof(LLItem));
+  i = (BST *)malloc(sizeof(Node));
   i->str = scopy;
   i->next = 0;
 
   /* append to end of list */
-  if (lp->last) {			/* list not empty */
-    lp->last->next = i;
+  if (tree->last) {			/* list not empty */
+    tree->last->next = i;
   } else {			/* list empty */
-    lp->first = i;
+    tree->first = i;
   }
 
   /* new item is last on list */
-  lp->last = i;
-  doCheck(lp);
+  tree->last = i;
+  doCheck(tree);
 }
 
 /* print list membership.  Prints default mesage if message is NULL */
-void llPrint(LList *lp, char *msg)
+void llPrint(BST *tree, char *msg)
 {
-  LLItem *ip;
+  BST *temp;
   int count = 1;
-  doCheck(lp);
+  doCheck(tree);
   puts(msg ? msg :" List contents:");
-  for (ip = lp->first; ip; ip = ip->next) {
-    printf("  %d: <%s>\n", count, ip->str);
+  for (temp = tree->first; temp; temp = temp->next) {
+    printf("  %d: <%s>\n", count, temp->str);
     count++;
   }
 }
 
 /* check llist consistency */
-int llCheck(LList *lp)
+int BSTCheck(BST *tree)
 {
-  LLItem *ip;
-  ip = lp->first;
-  if (!ip) 
-    assert(lp->last == 0);
+  BST *temp;
+  temp = tree->first;
+  if (!temp) 
+    assert(temp->last == 0);
   else {
-    for (; ip->next; ip = ip->next);
-    assert(ip == lp->last);
+    for (; temp->next; temp = temp->next);
+    assert(temp == tree->last);
   }
   return 0;
 }

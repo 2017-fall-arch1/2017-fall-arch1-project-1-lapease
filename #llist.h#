@@ -1,13 +1,13 @@
-#ifndef llist_included		/* prevent multiple inclusion */
-#define llist_included
+#ifndef BST_included		/* prevent multiple inclusion */
+#define BST_included
 
 
 /* a linked-list item */
-typedef struct LLItem_s {
-  struct LLItem_s *next; 
+typedef struct Node_s {
+  struct Node_s *next; 
   char *fName;
   char *lName;
-} LLItem;
+} Node;
 
 /* a list of LLItems */
 typedef struct {

@@ -1,23 +1,23 @@
-#ifndef llist_included		/* prevent multiple inclusion */
-#define llist_included
+#ifndef BST_included		/* prevent multiple inclusion */
+#define BST_included
 
 
 /* a linked-list item */
-typedef struct LLItem_s {
-  struct LLItem_s *next; 
+typedef struct Node_s {
+  struct Node_s *next; 
   char *fName;
   char *lName;
-} LLItem;
+} Node;
 
 /* a list of LLItems */
 typedef struct {
-  LLItem *first, *last;
-} LList;
+   BST *first, *last;
+} BST;
 
 extern int llDoCheck;		/* set true for paranoid consistency checking */
 
 /* create a new list */
-LList *llAlloc();
+BST createTree();
 
 /* free memory associated with a list, discarding all items it contains */
 void llFree(LList *lp);
